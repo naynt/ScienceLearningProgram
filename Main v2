@@ -1,0 +1,644 @@
+#!/usr/bin/env Python3
+import PySimpleGUI as sg
+from PySimpleGUI import easy_print
+from PySimpleGUI import popup_no_frame
+
+
+
+from PySimpleGUI import popup_scrolled
+
+import tkinter as tk
+from tkinter import scrolledtext
+import textwrap
+
+
+sg.ChangeLookAndFeel('TealMono')
+
+
+
+
+
+
+# ------ Menu Definition ------ #
+menu_def = [['File', ['Open', 'Save', 'Exit', 'Properties']],
+            ['Edit', ['Paste', ['Special', 'Normal', ], 'Undo'], ],
+            ['Help', 'About...'], ]
+
+
+#==============================================================================================================================
+#----------MAIN PAGE MENU----------MAIN PAGE MENU----------MAIN PAGE MENU----------MAIN PAGE MENU----------MAIN PAGE MENU
+#==============================================================================================================================
+
+#Columns--------------------------------------------------------------------------------------------------------------------------
+
+column1 = [
+        [sg.Button('Immunology', size=(40, 1), font=("Helvetica", 25))],
+        [sg.Button('Genomics', size=(40, 1), font=("Helvetica", 25))],
+        [sg.Button('Cancer Immunology', size=(40, 1), font=("Helvetica", 25))],
+        [sg.Button('Stem Cell Neurobiology', size=(40, 1), font=("Helvetica", 25))],
+        [sg.Button('Type II Diabetes Renal Failure', size=(40, 1), font=("Helvetica", 25))],
+        [sg.Button('Robotics with Python', size=(40, 1), font=("Helvetica", 25))],
+        [sg.Button('Climate Change', size=(40, 1), font=("Helvetica", 25))],
+        [sg.Button('Exit')]]
+
+column2 = [
+    [sg.Button('About', size =(10,1),font=("Helvetica", 25))],
+    [sg.Button(image_filename = (r'C:\Users\User\PycharmProjects\GUI\JCSMR.png'),image_size=(200,100),image_subsample=2,border_width=0)],
+    [sg.Button(image_filename = (r'C:\Users\User\PycharmProjects\GUI\Scripps.png'),image_size=(200,100),image_subsample=2,border_width=0)],
+    [sg.Button(image_filename = (r'C:\Users\User\PycharmProjects\GUI\Kolling.png'),image_size=(200,100),image_subsample=2,border_width=0)],
+    [sg.Button(image_filename = (r'C:\Users\User\PycharmProjects\GUI\EngeneIC.png'),image_size=(200,100),image_subsample=2,border_width=0)],
+    [sg.Button('Publications', size =(10,1),font=("Helvetica", 25))]
+
+]
+
+column1_Bcell = [[sg.Text("something",background_color = 'white')]]
+column2_Bcell = [[sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\Th.png',background_color='white')]]
+column1_Tcell = [[sg.Text("something",background_color='white')]]
+column2_Tcell = [[sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\Th.png',background_color='white')]]
+column1_Tccell = [[sg.Text("something",background_color='white')]]
+column1_naive = [[sg.Text('Precursor T-cells for effector and memory T-cell subsets derived from the thymus',font=('Helvetica', 12),background_color= 'white')],
+                    [sg.Text('The following list characterises naive T-cells: ',background_color='white',font=('Helvetica', 12))],
+                    [sg.Text('Expresses:',text_color=('red'),background_color='white')],
+                    [sg.Button('CD45RA',key='CD45RA'),sg.Button('CCR7',key='CCR7'),sg.Button('CD62L',key='CD62L'),sg.Button('CD127',key='CD127'),sg.Button('CD132',key='CD132'),sg.Text('but does not express CD25, CD44, CD69, CD45RO, HLA-DR')],
+                    [sg.Text('Secretes',text_color=('red'),background_color='white')],
+                    [sg.Button('IFN-Gamma',key="IFN-Gamma"),sg.Button('TNF-Alpha',key='TNF-Alpha'),sg.Button('lymphotoxin-alpha'),sg.Button('IFN-Gamma'),sg.Button('IL-2')],
+                    [sg.Text('Markers',text_color= 'red',background_color='white')],
+                    [sg.Button('CCR7',key='CCR7'),sg.Button('CD45R',key='CD45R'),sg.Button('CD62L',key='CD62L'),sg.Button('CD127',key='CD127'),sg.Button('CD132',key='CD132')],
+                    [sg.Text('Differentiation factors (Th0)',text_color=('red'),background_color='white')],
+                    [sg.Text('Migrates to secondary lymph nodes')],
+                    [sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\Th1_Th2.png',background_color='white')]
+                   ]
+column1_Th1cell = [[sg.Text('Th1 cells promote pro-inflammatory reponses and defend against intracellular bacteria,fungi and viruses.',font=('Helvetica', 12),background_color= 'white')],
+                    [sg.Text('The following list characterises Th1 cells: ',background_color='white',font=('Helvetica', 12))],
+                    [sg.Text('Expresses:',text_color=('red'),background_color='white')],
+                    [sg.Button('T-bet',key='T-bet'),sg.Button('CXCR1',key='CXCR1'),sg.Button('CCR5',key='CCR5'),sg.Button('Tim3',key='Tim3')],
+                    [sg.Text('Secretes',text_color=('red'),background_color='white')],
+                    [sg.Button('IFN-Gamma',key='IFN-gamma'),sg.Button('TNF-Alpha',key='TNF-Alpha'),sg.Button('lymphotoxin-alpha',key='lymphotoxin'),sg.Button('IFN-Gamma', key="IFN-Gamma"),sg.Button('IL-2',key='IL-2')],
+                    [sg.Text('Markers',text_color= 'red',background_color='white')],
+                    [sg.Button('CD4',key="CD4"),sg.Button('IL-12R', key= 'IL-12R'),sg.Button('IL-18R')],
+                    [sg.Text('Differentiation factors (Th0 --> Th1)',text_color=('red'),background_color='white')],
+                    [sg.Button('IFN-gamma',key='IFN-Gamma'),sg.Button('IL-12', key ='IL-12 ')],
+                    [sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\Th1_Th2.png',background_color='white')]
+                   ]
+column1_Th2cell = [[sg.Text('Th2 cells defend against extracellular bacteria and parasites and activate B-cell antibody production.',font=('Helvetica', 12),background_color= 'white')],
+                    [sg.Text('The following list characterises Th2 cells: ',background_color='white',font=('Helvetica', 12))],
+                    [sg.Text('Expresses:',text_color=('red'),background_color='white')],
+                    [sg.Button('IL-1R',key='IL-1R'),sg.Button('IFN-gamma Receptor',key="IFN-Gamma"),sg.Button('CCR4',key='CCR4'),sg.Button('CCR8',key='CCR8'),sg.Button('Tim1',key='Tim1'),sg.Button('ICOS',key = 'ICOS'),sg.Button('Stat6',key='Stat6'),sg.Button('GATA-3',key='GATA3'),sg.Button('c-maf',key='cmaf')],
+                    [sg.Text('Secretes',text_color=('red'),background_color='white')],
+                    [sg.Button('IL-4',key='IL-4'),sg.Button('IL-5',key='IL-5'),sg.Button('IL-10',key='IL-10'),sg.Button('IL-13',key='IL-13'),sg.Button('IL-2',key = 'IL-2')],
+                    [sg.Text('Markers',text_color= 'red',background_color='white')],
+                    [sg.Button('CD4',key='CD4'),sg.Button('stat6',key='stat6'),sg.Button('GATA-3',key='GATA3'),sg.Button('c-maf')],
+                    [sg.Text('Differentiation factors (Th0 --> Th2)',text_color=('red'),background_color='white')],
+                    [sg.Button('IL-4',key='IL-4')],
+                    [sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\Th1_Th2.png',background_color='white')]
+                   ]
+
+column1_Th3cell = [[sg.Text('Th3 cells are a regulatory T-cell subset important in intestinal immune regulation',font=('Helvetica', 12),background_color= 'white')],
+                    [sg.Text('The following list characterises Th3 cells: ',background_color='white',font=('Helvetica', 12))],
+                    [sg.Text('Expresses:',text_color=('red'),background_color='white')],
+                    [sg.Button('GITR'),sg.Button('c-maf'),sg.Text('no or low expression FOXP3,CD25')],
+                    [sg.Text('Secretes',text_color=('red'),background_color='white')],
+                    [sg.Button('TGF-Beta',key='TGF-Beta')],
+                    [sg.Text('Markers',text_color= 'red',background_color='white')],
+                    [sg.Button('CD4',key='CD4')],
+                    [sg.Text('Differentiation factors (Th0 --> Th3)',text_color=('red'),background_color='white')],
+                    [sg.Button('IL-10',key='IL-10')],
+                    [sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\Th3.png',background_color='white')]
+                   ]
+
+column1_Th9cell = [[sg.Text('T-helper 9 cells are thought to target helminth parasites')],
+                    [sg.Text('The following list characterises Th9 cells: ',background_color='white',font=('Helvetica', 12))],
+                    [sg.Text('Expresses:',text_color=('red'),background_color='white')],
+                    [sg.Button('IRF4'),sg.Button('PU.1'),sg.Text('no expression of CCR4')],
+                    [sg.Text('Secretes',text_color=('red'),background_color='white')],
+                    [sg.Button('IL-9')],
+                    [sg.Text('Markers',text_color= 'red',background_color='white')],
+                    [sg.Button('CD4'),sg.Button('CCR5'),sg.Button('CD4'),sg.Button('CD4')],
+                    [sg.Text('Differentiation factors (Th0 --> Th9)',text_color=('red'),background_color='white')],
+                    [sg.Button('IL-9,IL-4,TGF-Beta')],
+                    [sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\Th3.png',background_color='white')]
+                   ]
+
+column1_Tfcell = [[sg.Text('Follicular B-helper T-cells are important in supporting Germinal Centre B-cells and aiding their differentiation into B-memory and plasma cells',font=('Helvetica', 12),background_color= 'white')],
+                    [sg.Text('The following list characterises Tf cells: ',background_color='white',font=('Helvetica', 12))],
+                    [sg.Text('Expresses:',text_color=('red'),background_color='white')],
+                    [sg.Button('CXCR5'),sg.Button('PD-1'),sg.Button('BTLA'),sg.Button('ICOS'),sg.Button('CD40L')],
+                    [sg.Text('Secretes',text_color=('red'),background_color='white')],
+                    [sg.Button('IL-21'),sg.Button('IL-4'),sg.Button('Bcl6')],
+                    [sg.Text('Markers',text_color= 'red',background_color='white')],
+                    [sg.Button('CD4')],
+                    [sg.Text('Differentiation factors (Th0 --> Tf)',text_color=('red'),background_color='white')],
+                    [sg.Button('IL-10')],
+                    [sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\Tf.png',background_color='white')]
+                   ]
+column1_Trcell = [[sg.Text('Regulatory helper T-cells suppress tumour immunity, maintain immune self tolerance and help prevent autoimmunity',font=('Helvetica', 12),background_color= 'white')],
+                    [sg.Text('The following list characterises Treg cells: ',background_color='white',font=('Helvetica', 12))],
+                    [sg.Text('Expresses:',text_color=('red'),background_color='white')],
+                    [sg.Button('CTLA-4'),sg.Button('FOXP3'),sg.Button('GITR'),sg.Button('LAG3')],
+                    [sg.Text('Secretes',text_color=('red'),background_color='white')],
+                    [sg.Button('IL-10'),sg.Button('TGF-Beta'),sg.Button('adenosine')],
+                    [sg.Text('Markers',text_color= 'red',background_color='white')],
+                    [sg.Button('CD4'),sg.Button('CD25'),sg.Button('CD152(CTLA-4)')],
+                    [sg.Text('Differentiation factors (Th0 --> Treg)',text_color=('red'),background_color='white')],
+                    [sg.Button('?')],
+                    [sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\Tf.png',background_color='white')]
+                   ]
+
+column1_Tr1cell = [[sg.Text('Type I regulatory cells regulate tolerance towards antigens of any origin. They maintain and induce peripheral tolerance and suppress tissue inflammation in autoimmunity',font=('Helvetica', 12),background_color= 'white')],
+                    [sg.Text('The following list characterises Tr1 cells: ',background_color='white',font=('Helvetica', 12))],
+                    [sg.Text('Expresses:',text_color=('red'),background_color='white')],
+                    [sg.Button('CD49'),sg.Button('LAG3'),sg.Button('CD226')],
+                    [sg.Text('Secretes',text_color=('red'),background_color='white')],
+                    [sg.Button('IL-10'),sg.Button('IFN-gamma'),sg.Button('IL-5'),sg.Button('TGF-Beta'),sg.Text('Does not secrete IL-2 or IL-4')],
+                    [sg.Text('Markers',text_color= 'red',background_color='white')],
+                    [sg.Button('CD4'),sg.Button('CD49'),sg.Text('no GTR expressed and very low CTLA4 or CD25 expressed')],
+                    [sg.Text('Differentiation factors (Th0 --> Tr1)',text_color=('red'),background_color='white')],
+                    [sg.Button('?')],
+                    [sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\Tf.png',background_color='white')]
+                   ]
+
+column1_Th17cell = [[sg.Text('Th17 cells are related to T-reg cells. They maintain mucosal barriers, contribute to pathogen clearence and implicated in autoimmune and inflammatory disorders',font=('Helvetica', 12),background_color= 'white')],
+                    [sg.Text('The following list characterises Th17 cells: ',background_color='white',font=('Helvetica', 12))],
+                    [sg.Text('Expresses:',text_color=('red'),background_color='white')],
+                    [sg.Button('ROR-Gamma')],
+                    [sg.Text('Secretes',text_color=('red'),background_color='white')],
+                    [sg.Button('IL-17'),sg.Button('IL-21'),sg.Button('IL-26'),sg.Button('GM-CSF')],
+                    [sg.Text('Markers',text_color= 'red',background_color='white')],
+                    [sg.Button('CD4'),sg.Button('ROR-gamma'),sg.Button('CCR4'),sg.Button('CCR6'),sg.Button('CD161'),sg.Text('not CXCR3')],
+                    [sg.Text('Differentiation factors (naive T-cells --> Th17)',text_color=('red'),background_color='white')],
+                    [sg.Button('?')],
+                    [sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\Th17.png',background_color='white')]
+                   ]
+
+column1_Th22cell = [[sg.Text('T-helper 22 cells are mainly found in the skin and play a role in wound healing and protecting epithelial barrier organs. Also linked to inflammatory diseases',font=('Helvetica', 12),background_color= 'white')],
+                    [sg.Text('The following list characterises Th22 cells: ',background_color='white',font=('Helvetica', 12))],
+                    [sg.Text('Expresses:',text_color=('red'),background_color='white')],
+                    [sg.Button('CCR4'),sg.Button('CCR6'),sg.Button('AhR')],
+                    [sg.Text('Secretes',text_color=('red'),background_color='white')],
+                    [sg.Button('IL-22'),sg.Text('does not secrete IFN-gamma, IL-4 or IL-17')],
+                    [sg.Text('Markers',text_color= 'red',background_color='white')],
+                    [sg.Button('CD4'),sg.Button('ROR-gamma'),sg.Button('AhR'),sg.Button('CCR4'),sg.Button('CCR6'),sg.Button('CCR10'),sg.Button('PDGFR')],
+                    [sg.Text('Differentiation factors (Th0 --> Treg)',text_color=('red'),background_color='white')],
+                    [sg.Button('?')],
+                    [sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\Tf.png',background_color='white')]
+                   ]
+
+# Cytokines,Chemokines and receptors
+
+CD4 = "CD4 (cluster of differentiation 4, is a glycoprotein found on the surface of immune cells such as T-helper cells, monocytes, macrophages and dendritic cells. The CD4 is a coreceptor of the T cell receptor (TCR) and assists the latter in communicating with antigen-presenting cells. The TCR complex and CD4 each bind to distinct regions of the antigenpresenting MHC II molecule."
+Tbet = "A transcription factor that controls the expression of IFN-gamma in Th1 and natural killer cells"
+CCR5 = "C-C chemokine receptor type 5 or CD195, is a G protein-coupled receptor on the surface of white blood cells. CCR5 ligands include CCL3(MIP1-alpha), CCR4(MIP1-Beta), CCL3L1, CCL5(RANTES). CCR5 is predominantly on T-cells, macrophages, dendritic cells, eosinophils and microglia"
+IFNGamma = "Interferon gamma (IFN-gamma), is a pro-inflammatory cytokine that is critical for innate and daptive immunity against viral, intracellular bacteria and protozoal infections. It is an important activator of macrophages and inducer of MHCII molecules. Overexpression of this cytokine can lead a number of inflammatory and autoimmune diseases. It is produced by NK, NKT, Th1,cytotoxic T-cells amongst othersIt binds to IFNG receptor 1 and 2."
+TNFAlpha = "Tumour necorsis factor alpha (TNF-Alpha)is an inflammatory cytokine produced by activated Macrophages, CD4 lymphocytes, NK cells, neutrophils, mast cells, eosinophils and neurons. It is a endogenous pyrogen which is able to induce fever, apoptotic cell death,cachexia and inflammation. In addition it inhibits tumourigenesis and viral replication and responds to sepsis via IL-1 and IL-6 producing cells. Dysregulation of TNF production has been implicated in a variety of diseases including Alzheimers, cancer, major depression, psoriasis and inflammatory bowel disease. It binds to two types of receptors, TNFR1(CD120a) and TNFR1(CD120b) "
+IL12R = "IL-12 receptor binds IL-12 cytokine which is stimulates the growth and function of T-cells and enhances the cytotoxicity of NK and cytotoxic CD8 T-cells."
+IL12 = "IL-12 is a cytokine which stimulates the growth and function of T-cells and is involved in the differentiation of naive T-cells into Th1 cells. IL-12  enhances cytotoxic activity of NK and CD8 cytotoxic T-cells. In addition Il-12 has been shown to reduce angiogenesois(blocking the formation of new blood cells. This cytokine is secreted by dendritic cells, macrophages, neutrophils and human B-lymphoblastoid cells"
+CXCR1 = "CXCR1 or IL-8-alpha or CD181 receptor is a chemokine receptor which binds to IL8 with great affinity. It is produced by Macrophages and endothelial cells"
+Tim3 = "Tim3 (T-cell immunoglobulin and mucin-domain containing-3) is a protein encoded by the HAVCR2 gene. It is expressed on cells like Th17, Treg,dendritic cells, NK cells and monocytes. Its functions as an immune check point and in combination with PD-1 and LAG3, mediates CD8 cytotoxic activity.It is  a CD4 Th1-specific cell surface protein that regulates macrophage activation."
+IL18R = "Is a receptor for the proinflammatory IL-18 cytokine which is predominantly produced by macrophages. IL-8 is shown to induce cell mediated immunity in response to bacterial antigens. "
+IL2 = "IL-2 is a pro-inflammatory cyokine with a variety of functions with the immune system, tolerance and immunity, primarily via its effects on T-cells. It aids in preventing autoimmunity by promoting the differentiation of immature T-cells into T-regulatory cells. IL-2 also promotes the differentiation of T-cells into effector T-cells and memory T-cells once the initial T-cells has been stimulated by antigens, thus helping the body fight of infections. The IL-2 binds to IL-2R which consists of CD25, CD122 and CD132. "
+lymphotoxin = "Lymphotoxin or TNF-Beta is an anti-inflammatory cytokine prodcued by lymphocytes and causes cellular destruction of tumour cell lines. It is involved in the regulation of cell survival, proliferation, differentiation and apoptosis."
+CD45L = "CD45L is expressed on B-cells and subsets of T and NK cells. It binds to CD45 which is a signalling molecule involved in regulating a variety of cellular process including cell growth, differentiation,mitotic cycle and oncogenic transformation."
+CCR7 = "CCR7 or CD197, is a receptor expression on a variety of lymphocytes and activates B and T-cells. It binds to CCR7, whcih is involved to stimulate dendritic cell maturation, the homing of T-cells to various secondary lymphoid organs as well of trafficking T-cells within the spleen."
+CD62L = "CD62L or L-selectin, is an adhesion molecule found on leukocytes and plays an important function between lymphocyte-endothelial interactions. CD62L acts as a homing receptor for lymphocytes to enter secondary lymphoid tissue from blood vessels"
+CD127 = ""
+CD132 = 'CD132 or common gamma chain or IL2-RG is a cytokine expressed on most lymphocytes populations. It is thought to direct the growth and maturation of T-cells, B-cells and NK cells. '
+IL1R = "IL1-R is the receptor of pro-inflammatory cytokine IL-1 which is produced by macrophages, monocytes, fibroblasts,dendritic cells and also expressed by B-cells, NK cells, microglia and epithelial cells. They form an important part of the inflammatory response of the body against infection."
+CCR4 = "CCR4 or CD194"
+CCR8 = "CCR8's role is to regulate the chemotaxis of monocytes, thymic cell apoptosis and psotioning of activated Tcells within antigenic challenge sites and specialised areas of lymphoid tissues"
+ICOS = "ICOS (Inducible T-cell costimulator) or CD278, is a costimulatory molecule that is expressed on activated T-cells, especially important of Th2 cells"
+Stat6 = "Signal transducer and activator of transcription 6, plays a role in in exerting IL-4 mediated biological responses and associated with anti-apoptotic activity. Thought to aid in the differentiation of Th2 cells"
+GATA3 = "GATA-3 is a transcription factor which has a wide variety of biological responses including inflammatory and humoral iimune responses and the proper functioning of endothelial cells in blood vessels. GATA-3 specifically promotes the secretion of IL-4,IL-5 and IL-13 from Th2 cells and all three of these interleukins serve to promote allergic responses."
+IL4 = "IL-4 is an anti-inflammatory cytokine which induces differentiation of naive Th0 cells to Th2 cells. After activation bu IL-4, Th2 cells subsequently produce additional IL-4 in a positive feedback loop.The cell that initially produces the IL-4, thus inducing Th2 differentiation has not been identified yet,but some studies indicate it could be Basophils. In addition, IL-4 stimulates the activated B-cell and T-cell proliferation, and the differentiation of B-cells into plasma cells. Il-4 decreases the production of Th1 cells, macrophages, IFN-gamma and denritic cell IL-12."
+IL5 = "IL-5 is an anti-inflammatory cytokine produced by Th2 and mast cells. Once bound to IL-5R, it stimulates B-cell growth and increases antibody secretion, primarily IgA. IL-5 has long been associated several allergic diseases including asthma and rhinitis"
+IL10 = "IL-10 is an anti-inflammatory cytokine which downregulates the expression of Th1 cytokines, MHC class II and co-stimulatory molecules on macrophages. It also enhances B-cell survival, proliferation and antibody production. IL-10 can block NF-kB, suppresscytokine secretion, antigen presentation and CD4 T cell activation. More specifically, IL-10 inhibits LPS and inhibit the synthesis of pro-inflammatory cytokines, TNF-alpha, IL-1-Beta, IL-12, IL-2, IL-3 and GM-CSF produced by cells such as macrophages and Th1 cells. IL-10 stimulates B-cell maturation and antibody production."
+IL13 = "IL-13 is an anti-inflammatory cytokine secreted by Th2, NKT, mast, eosinophil and nuocytes. IL-13 regulates IgE synthesis, goblet cell hyperplasia, mucus hypersecretion, airway hyperres;onsivenewss and fibrosis. It is mediator of allergic inflammation and different diseases including asthma.  "
+CCL2 = "CCL2 or MCP-1 recruits monocytes, memory T-cells and dendritic cells to the sites of inflammation produced by either tissue injury or infection"
+CCL4 = "CCL4 or MIP-1 is produced by neutrophils, monocytes, B-cells, T-cells, fibroblasts, endothelial cells and epithelial cells. Its main function is to act as a chemoattractant for NK, monocytes and a variety of other immune cells"
+CCL5 = "CCL5 or RANTES is chemotactic for T-cells, eosinophils and basophils and plays an active role in recruiting leukocytes into inflammatory sites"
+
+
+column1_NKcell = [[sg.Text("something",background_color='white')]]
+column2_NKcell = [[sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\Th.png',background_color='white')]]
+
+
+layout_Main = [
+        [sg.Menu(menu_def, tearoff=True)],
+        [sg.Column(column1,size=(1200,600),scrollable=True),sg.Column(column2,size=(500,500))]
+        ]
+
+p1 = "T-helper cells include Th1, Th2, Th3, Treg, Th17, Th22a and fTh. Each cell type has a variety of identifying markers. These include CD4, CD8, CD3, CD "
+p2 = "T-helper cells"
+
+
+title_window = sg.Window('Choose Science',layout_Main, default_element_size=(30, 1),size=(1750,750), grab_anywhere=True)
+
+
+immunology_window_active = False
+genomics_window_active = False
+cancerImmunology_window_active = False
+neurobiology_window_active = False
+robotics_window_active = False
+climate_window_active = False
+exit_active = False
+
+while True:
+    event1,value1 = title_window.Read()
+
+    if event1 is None and event1 == 'Exit':
+        break
+
+    if not exit_active and event1 == 'Exit':
+        break
+    #========================================================================================================================
+    #----------IMMUNOLOGY----------IMMUNOLOGY----------IMMUNOLOGY----------IMMUNOLOGY----------IMMUNOLOGY----------IMMUNOLOGY#
+    #=========================================================================================================================
+
+    if not immunology_window_active and event1 == 'Immunology':
+        title_window.Hide()
+
+        immunology_window_active = True
+
+        tab3_layout = [[sg.T()]]
+        tab4_layout = [[sg.T()]]
+        tab5_layout = [[sg.T()]]
+        tab6_layout = [[sg.T()]]
+        tab7_layout = [[sg.T()]]
+        tab8_layout = [[sg.T()]]
+
+        #NKT cells
+
+        NK_Layout = [[sg.T()]]
+        NK1_layout = [[sg.T()]]
+        NK2_Layout = [[sg.T()]]
+        NKT1_Layout = [[sg.T()]]
+        NKT2_Layout = [[sg.T()]]
+
+        #T-cell sub Tab menu
+        th_overview = [[(sg.Column(column1_Tcell,size=(800,600),background_color='white',scrollable=True)),
+                        sg.Column(column2_Tcell,size=(800,600),background_color='white',scrollable=True)
+        ]]
+        naive_layout = [[sg.Column(column1_naive,size=(1400,600),background_color='white',scrollable=True)]]
+        th1_layout = [[sg.Column(column1_Th1cell,size=(1400,600),background_color='white',scrollable=True)]]
+        th2_layout = [[sg.Column(column1_Th2cell,size=(1400,600),background_color='white',scrollable=True)]]
+        th3_layout = [[sg.Column(column1_Th3cell,size=(1400,600),background_color='white',scrollable=True)]]
+        th9_layout = [[sg.Column(column1_Th9cell, size=(1400, 600), background_color='white', scrollable=True)]]
+        tf_layout = [[sg.Column(column1_Tfcell,size=(1400,600),background_color='white',scrollable=True)]]
+        treg_layout = [[sg.Column(column1_Trcell,size=(1400,600),background_color='white',scrollable=True)]]
+        tr1_layout = [[sg.Column(column1_Tr1cell, size=(1400, 600), background_color='white', scrollable=True)]]
+        th17_layout = [[sg.Column(column1_Th17cell,size=(1400,600),background_color='white',scrollable=True)]]
+        th22_layout = [[sg.Column(column1_Th22cell,size=(1400,600),background_color='white',scrollable=True)]]
+
+        #B-cell sub tab menu
+
+        b_overview = [
+
+            [(sg.Column(column1_Bcell, size=(800, 600), background_color='white',scrollable=True)),
+             (sg.Column(column2_Bcell, size=(800, 600), background_color='white', scrollable=True))
+            ]]
+        nb_layout = [[sg.T()]]
+        ib_layout = [[sg.T()]]
+        pb_layout = [[sg.T()]]
+        ab_layout = [[sg.T()]]
+        mb_layout = [[sg.T()]]
+        b1_layout = [[sg.T()]]
+        mzb_layout = [[sg.T()]]
+        rb_layout = [[sg.T()]]
+        fb_layout = [[sg.T()]]
+
+        tc_overview = [
+
+            [(sg.Column(column1_Bcell, size=(800, 600), background_color='white', scrollable=True)),
+             (sg.Column(column2_Bcell, size=(800, 600), background_color='white', scrollable=True))
+             ]]
+        c_layout = [[sg.T()]]
+
+
+        # B-cell layout
+        layout_B = [
+            [sg.TabGroup([[sg.Tab('B-Cell Overview', b_overview),
+            sg.Tab('naive B-cells', nb_layout),
+            sg.Tab('immature B-cells', ib_layout),
+            sg.Tab('plasma B-cells', pb_layout),
+            sg.Tab('activated B-cells', ab_layout),
+            sg.Tab('memory B-cells', mb_layout),
+            sg.Tab('B1 cells', b1_layout),
+            sg.Tab('marginal zone B-cells', mzb_layout),
+            sg.Tab('regulatory B-cells', rb_layout),
+            sg.Tab('follicular B-cells', fb_layout)]],
+            tooltip='TIP2')],
+            ]
+
+        # Helper T-cell layout
+        layout_th = [
+                    [sg.TabGroup([[ sg.Tab('Th-Cell Overview', th_overview),
+                    sg.Tab('Naive T-cells', naive_layout),
+                    sg.Tab('T-Helper 1', th1_layout),
+                    sg.Tab('T-helper 2', th2_layout),
+                    sg.Tab('T-helper 3', th3_layout),
+                    sg.Tab('T-helper 9', th9_layout),
+                    sg.Tab('Th-follicular', tf_layout),
+                    sg.Tab('Th-regulatory', treg_layout),
+                    sg.Tab('Type I -regulatory', tr1_layout),
+                    sg.Tab('T-helper 17', th17_layout),
+                    sg.Tab('T-helper 22', th22_layout)]],
+                    tooltip='TIP2')],
+                    ]
+
+        layout_tc = [
+            [sg.TabGroup([[sg.Tab('Cytotoxic T-cells Overview', c_layout),
+                    sg.Tab('Cytotoxic T-cells alpha/Beta', c_layout),
+                    sg.Tab('Cytotoxic T cells gamma/sigma', c_layout),
+                    sg.Tab('Cytotoxic CD1 T-cells', c_layout),
+                    ]],
+                    tooltip='TIP2')],
+            ]
+
+        layout_nk = [
+            [sg.TabGroup([[sg.Tab('NK and NKT overview',NK_Layout),
+            sg.Tab('NK 1.1', NK1_layout),
+            sg.Tab('NK 1.2', NK2_Layout),
+            sg.Tab('Type I NKT', NKT1_Layout),
+            sg.Tab('Type II NKT', NKT2_Layout),
+            ]],
+            tooltip='TIP2')],
+            ]
+
+        # Immunology layout
+        layout_Immunology = [[sg.Text('File Name')],[sg.Input(),sg.FileBrowse(), sg.OK(),sg.Cancel()],
+
+            [sg.TabGroup([[sg.Tab('Th-cell',layout_th),
+            sg.Tab('Tc-cell',layout_tc),
+            sg.Tab('B-cell', layout_B),
+            sg.Tab('NK Cell',layout_nk),
+            sg.Tab('Macrophages',tab4_layout),
+            sg.Tab('Neutrophils',tab5_layout),
+            sg.Tab('cytokines',tab6_layout),
+            sg.Tab('Chemokines',tab7_layout)]],
+            tooltip='TIP2')],
+                                ]
+
+        immunology_window = sg.Window('Immunology',layout_Immunology,size=(1500,800), grab_anywhere=False)
+
+        while True:
+            event2,value2 = immunology_window.Read()
+            if event2 is None or event2 == 'Exit':
+                immunology_window_active = False
+                immunology_window.Close()
+                title_window.UnHide()
+                break
+            elif event2.startswith('CD4'):
+                popup_scrolled(CD4)
+            elif event2.startswith('T-bet'):
+                popup_scrolled(Tbet)
+            elif event2.startswith('CCR5'):
+                popup_scrolled(CCR5)
+            elif event2.startswith('TNF-Alpha'):
+                popup_scrolled(TNFAlpha)
+            elif event2.startswith('IFN-Gamma'):
+                popup_scrolled(IFNGamma)
+            elif event2.startswith('IL-12R'):
+                popup_scrolled(IL12R)
+            elif event2.startswith('IL-12'):
+                popup_scrolled(IL12)
+            elif event2.startswith('CXCR1'):
+                popup_scrolled(CXCR1)
+            elif event2.startswith('Tim3'):
+                popup_scrolled(Tim3)
+            elif event2.startswith('IL-18R'):
+                popup_scrolled(IL18R)
+            elif event2.startswith('IL-2'):
+                popup_scrolled(IL2)
+            elif event2.startswith('lymphotoxin-Alpha'):
+                popup_scrolled(lymphotoxin)
+            elif event2.startswith('CD45R'):
+                popup_scrolled(CD45L)
+            elif event2.startswith('CCR7'):
+                popup_scrolled(CCR7)
+            elif event2.startswith('CD62L'):
+                popup_scrolled(CD62L)
+            elif event2.startswith('CD127'):
+                popup_scrolled(CD127)
+            elif event2.startswith('CD132'):
+                popup_scrolled(CD132)
+            elif event2.startswith('IL-1R'):
+                popup_scrolled(IL1R)
+            elif event2.startswith('CCR4'):
+                popup_scrolled(CCR4)
+            elif event2.startswith('IL-4'):
+                popup_scrolled(IL4)
+            elif event2.startswith('IL-5'):
+                popup_scrolled(IL5)
+            elif event2.startswith('IL-10'):
+                popup_scrolled(IL10)
+            elif event2.startswith('IL-13'):
+                popup_scrolled(IL13)
+            elif event2.startswith('CCL2'):
+                popup_scrolled(CCL2)
+            elif event2.startswith('CCL4'):
+                popup_scrolled(CCL4)
+            elif event2.startswith('CCL5'):
+                popup_scrolled(CCL5)
+
+
+
+
+
+
+    #=============================================================================================================================
+    #----------GENOMICS----------GENOMICS----------GENOMICS----------GENOMICS----------GENOMICS----------GENOMICS----------GENOMICS
+    #==============================================================================================================================
+
+    if not genomics_window_active and event1 == 'Genomics':
+        title_window.Hide()
+        genomics_window_active = True
+
+
+        column1_mRNA = [
+            [sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\mRNA.png',background_color='white')]
+
+        ]
+
+        column1_tRNA = [
+            [sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\trna.png', background_color='white')]
+
+        ]
+
+        layout_Default =[[sg.T()]]
+        layout_mRNA = [[sg.Column(column1_mRNA,size=(1400,600),background_color='white',scrollable=True)]]
+        layout_tRNA = [[sg.Column(column1_tRNA, size=(1400, 600), background_color='white', scrollable=True)]]
+
+        layout_def_Epi = [[sg.Text('Definitions - click on button', font=('Helvetica', 12), background_color='white')],
+                          [sg.Button('', key='Polymerase')],
+                          [sg.Button('Overhangs', key='Overhangds')],
+                          [sg.Button('IFN-Gamma', key="IFN-Gamma")]],
+
+
+
+        layout_def_int
+        layout_def_Seq = [[sg.Text('Definitions - click on button', font=('Helvetica', 12), background_color='white')],
+                          [sg.Button('Normalise', key='Normalise')],
+                          [sg.Button('Pool libraries', key='Pool libraries')],
+                          [sg.Button('Optimizing', key='Optimizing')],
+                          [sg.Button('Cluster densities', key='Cluster desnities')],
+                          [sg.Button('Indexing adapters', key='Indexing adapters')],
+                          [sg.Button('Cluster fragments', key='Cluster fragments')],
+                          [sg.Button('Enriched fragments', key='Enriched fragments')],
+                          [sg.Button('Ligation adapters', key='Ligation Adapters')],
+                          [sg.Button('Overhangs', key='Overhangs')],
+                          [sg.Button('DESeq', key='DESeq')],
+                          [sg.Button('PAT-Seq', key='PAT-Seq')],
+                          [sg.Button('Gene enrichment analysis', key='Gene enrichment analysis')],
+                          [sg.Button('RBDmap', key='RBDmap')],
+                          [sg.Button('UniprotIDs', key='UniprotIDs')],
+                          [sg.Button('Ensembl gene ID', key='Ensembl gene ID')],
+                          [sg.Button('RNA mapping', key='RNA mapping')],
+                          [sg.Button('Tryptic peptides', key='Tryptic Peptides')],
+                          [sg.Button('Assigned peaks', key='Assigned peaks')],
+                          [sg.Button('Unassigned peaks', key='Unassigned peaks')],
+                          [sg.Button('Tryptic digestion', key='Tryptic digestion')],
+                          [sg.Button('Tail tools', key='Tail Tools')],
+                          [sg.Button('Directional sequencing', key='Directional sequencing')],
+                          [sg.Button('Gene alignment', key='Gene Alignment')],
+                          [sg.Button('Gene ontology', key='Gene ontology')],
+                          [sg.Button('Gene annotation', key='Gene annotation')],
+                          [sg.Button('Gene enrichment', key='Gene enrichment')],
+                          [sg.Button('Transcriptome sequencing', key='Transcriptome sequencing')],
+                          [sg.Button('Physical coverage', key='Physical coverage')],
+                          [sg.Button('Consensus sequence', key='Consensus sequence')],
+                          [sg.Button('Canonical sequence', key='Canonical sequence')],
+                          [sg.Button('Read coverage', key='Read coverage')],
+                          [sg.Button('Differential gene expression analysis', key='Differential gene expression analysis')],
+                          [sg.Button('Hierarchial clustering', key='Hierarchial clustering')],
+                          [sg.Button('PCA', key='PCA')],
+                          [sg.Button('Highly transcribed genes', key='Highly transcribed genes')],
+                          [sg.Button('Lowly transcribed genes', key='Lowly transcribed genes')],
+                          [sg.Button('Reads', key='Reads')],
+                          [sg.Button('Garbage reads', key='Garbage reads')],
+                          [sg.Button('Low quality score', key='Low quality score')],
+                          [sg.Button('Low diversity', key='Low diversity')],
+                          [sg.Button('Contigs', key='Contigs')],
+                          [sg.Button('Expressed sequence tag', key='Expressed sequence tag')],
+                          [sg.Button('Absolute quantification', key='Absolute quantification')],
+                          [sg.Button('Gene variance', key='Gene variance')],
+                          [sg.Button('', key="Validate libraries")]],
+        layout_def_Alt
+        layout_def_Rib
+
+        # RNA subtypes
+        layout_RNATypes = [
+            [sg.TabGroup([[sg.Tab('mRNA',layout_mRNA),
+                           sg.Tab('tRNA',layout_tRNA),
+                           sg.Tab('rRNA',layout_Default),
+                           sg.Tab('miRNA',layout_Default),
+                           sg.Tab('circRNA',layout_Default),
+                           sg.Tab('siRNA',layout_Default),
+                           sg.Tab('piRNA',layout_Default),
+                           sg.Tab('lnRNA',layout_Default)]],
+                         tooltip='TIP2')],
+            [sg.Button('Read')], [sg.Button('Exit')]]
+
+        #subgroups
+        layout_epitrans = [
+            [sg.TabGroup([[sg.Tab('Overview', layout_Default),
+                           sg.Tab('Methylation', layout_Default),
+                           sg.Tab('Methyltransferases', layout_Default),
+                           sg.Tab('RNA Methylation', layout_Default),
+                           sg.Tab('NSUN2', layout_Default)
+                           ]],
+                         tooltip='TIP2')],
+            [sg.Button('Read')], [sg.Button('Exit')]]
+
+        layout_polyad = [
+            [sg.TabGroup([[sg.Tab('Overview', layout_mRNA),
+                           sg.Tab('Polyadenylation', layout_tRNA),
+                           sg.Tab('Alternative Polyadenylation', layout_Default),
+
+                           ]],
+                         tooltip='TIP2')],
+            [sg.Button('Read')], [sg.Button('Exit')]]
+
+        layout_terminology = [
+            [sg.TabGroup([[sg.Tab('Epitranscriptomics', layout_def_Epi),
+                           sg.Tab('RNA interactome', layout_def_int),
+                           sg.Tab('RNA sequencing', layout_def_Seq),
+                           sg.Tab('Alternative Polyadenylation', layout_def_Alt),
+                           sg.Tab('Ribosome Profiling', layout_def_Rib)
+                           ]],
+                         tooltip='TIP2')]]
+
+        layout_Genomics = [[sg.Text('File Name')], [sg.Input(), sg.FileBrowse(), sg.OK(), sg.Cancel()],
+
+                            [sg.TabGroup([[sg.Tab('Genomic Terminology',layout_terminology),
+                            sg.Tab('RNA Types',layout_RNATypes),
+                            sg.Tab('RNA Sequencing', layout_Default),
+                            sg.Tab('PAT Sequencing', layout_Default),
+                            sg.Tab('Polyadenylation and APA',layout_Default),
+                            sg.Tab('Epitranscriptomics',layout_Default),
+                            sg.Tab('Bi-Sulfite treatment', layout_Default),
+                            sg.Tab('Polysome Profiling', layout_Default),
+                            sg.Tab('RNA/Protein interactome',layout_Default),
+                                            ]],
+                                          tooltip='TIP2')],
+                            [sg.Button('Read')], [sg.Button('Exit')]]
+
+
+
+
+        genomics_window = sg.Window('Genomics',layout_Genomics,size=(1700,750), grab_anywhere=False)
+        while True:
+            event2,value2 = genomics_window.Read()
+            if event2 is None or event2 == 'Exit':
+                genomics_window_active = False
+                genomics_window.Close()
+                title_window.UnHide()
+                break
+
+
+    if not genomics_window_active and event1 == 'Cancer':
+        title_window.Hide()
+        cancer_window_active = True
+        layout2 = [[sg.Text('Window 2')],
+                    [sg.Button('Exit')]]
+        cancer_window = sg.Window('Cancer',layout2)
+        while True:
+            event2,value2 = cancer_window.Read()
+            if event2 is None or event2 == 'Exit':
+                cancer_window_active = False
+                cancer_window.Close()
+                title_window.UnHide()
+                break
+
+    if not neurobiology_window_active and event1 == 'Neurobiology':
+        title_window.Hide()
+        neurobiology_window_active = True
+        layout2 = [[sg.Text('Window 2')],
+                   [sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\Th.png')],
+                    [sg.Button('Exit')]]
+        neurobiology_window = sg.Window('Cancer').Layout(layout2)
+        while True:
+            event2,value2 = neurobiology_window.Read()
+            if event2 is None or event2 == 'Exit':
+                neurobiology_window_active = False
+                neurobiology_window.Close()
+                title_window.UnHide()
+                break
+
+    if not cancerImmunology_window_active and event1 == 'Cancer Immunology':
+        title_window.Hide()
+        neurobiology_window_active = True
+        layout2 = [[sg.Text('Window 2')],
+                   [sg.Image(r'C:\Users\User\PycharmProjects\GUI\T-cells\Th.png')],
+                    [sg.Button('Exit')]]
+        cancerImmunology_window = sg.Window('Cancer Immunology').Layout(layout2)
+        while True:
+            event2,value2 = cancerImmunology_window.Read()
+            if event2 is None or event2 == 'Exit':
+                cancerImmunology_window_active_window_active = False
+                cancerImmunology_window.Close()
+                title_window.UnHide()
+                break
+
+
+
+
+
